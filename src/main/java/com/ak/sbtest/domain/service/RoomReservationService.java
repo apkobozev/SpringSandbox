@@ -29,8 +29,8 @@ public class RoomReservationService {
                 .findReservationByReservationDate(new java.sql.Date(date.getTime()));
         List<RoomReservation> result = new ArrayList<>();
         reservations.forEach(reservation -> {
-            Room room = roomRepository.findById(reservation.getRoomId()).orElse(new Room());
-            Guest guest = guestRepository.findById(reservation.getGuestId()).orElse(new Guest());
+            Room room = roomRepository.findById(reservation.getRoomId()).orElseGet(Room::new);
+            Guest guest = guestRepository.findById(reservation.getGuestId()).orElseGet(Guest::new);
             result.add(RoomReservation.builder()
                     .roomId(room.getRoomId())
                     .roomName(room.getRoomName())
